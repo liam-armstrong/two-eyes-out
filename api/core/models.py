@@ -77,8 +77,8 @@ class customUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 class userProfile(models.Model):
-    user = models.OneToOneField(
-        customUser,
+    profile = models.OneToOneField(
+        userProfile,
         on_delete=models.CASCADE,
     )
     sections = models.ManyToManyField(section)
