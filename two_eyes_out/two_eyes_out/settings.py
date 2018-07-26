@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'core.apps.CoreConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -105,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Declairing custom user model for use in authenticating
-AUTH_USER_MODEL = 'core.User'
+AUTH_USER_MODEL = 'core.customUser'
 
 
 # Internationalization
