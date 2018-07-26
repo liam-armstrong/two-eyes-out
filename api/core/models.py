@@ -47,6 +47,7 @@ class customUserManager(BaseUserManager):
 class customUser(AbstractBaseUser, PermissionsMixin):
     #Custom user for Django Auth with email as username and fields removed
     email = models.EmailField(unique=True, null=True)
+    sections = models.ManyToManyField(section)
     is_staff = models.BooleanField(
         ('staff status'),
         default=False,
@@ -75,10 +76,4 @@ class customUser(AbstractBaseUser, PermissionsMixin):
     
     def get_short_name(self):
         return self.email
-
-class userProfile(models.Model):
-    profile = models.OneToOneField(
-        userProfile,
-        on_delete=models.CASCADE,
-    )
-    sections = models.ManyToManyField(section)
+        

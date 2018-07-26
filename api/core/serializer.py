@@ -8,5 +8,5 @@ class sectionSerializer(serializers.HyperlinkedModelSerializer):
 
 class userSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = models.userProfile
-        fields = ('sections')
+        model = models.customUser
+        fields = ('email', 'sections')

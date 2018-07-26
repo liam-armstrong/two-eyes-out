@@ -11,5 +11,5 @@ class SectionViewSet(viewsets.ModelViewSet):
     serializer_class = serializer.sectionSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = models.userProfile.objects.all()
+    queryset = models.customUser.objects.all()
     serializer_class = serializer.userSerializer
