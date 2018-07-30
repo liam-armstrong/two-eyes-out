@@ -10,3 +10,4 @@ class userSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.customUser
         fields = ('email', 'sections')
+        

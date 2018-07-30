@@ -23,6 +23,9 @@ class section(models.Model):
         gen_table_line = re.search(r"General Seats Remaining:\d+",html.get_text()).group(0)
         return int(re.search(r'\d+', gen_table_line).group(0)) > 0
 
+    def create_section(self):
+        if section_is_valid()
+
 class customUserManager(BaseUserManager):
     # Custom user manager to handle our custom user
     def create_user(self, email, password, **args):
@@ -76,4 +79,3 @@ class customUser(AbstractBaseUser, PermissionsMixin):
     
     def get_short_name(self):
         return self.email
-        
