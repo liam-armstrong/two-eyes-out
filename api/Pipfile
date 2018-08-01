@@ -9,6 +9,7 @@ django = "*"
 djangorestframework = "*"
 "bs4" = "*"
 "psycopg2" = "*"
+lxml = "*"
 
 [dev-packages]
 

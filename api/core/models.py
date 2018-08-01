@@ -13,10 +13,13 @@ class section(models.Model):
 
     def get_link(self):
         return 'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=' + str(self.dept) + '&course=' + str(self.code) + '&section=' + str(self.sect)
-    
-    # write this function and have it validate section before saving to DB
-    # def is_valid_section(self):
 
+    # write this function and have it validate section
+    def is_valid_section(self):
+        raw_html = urlopen(self.get_link(), timeout = 5)
+        html = BeautifulSoup(raw_html, "lxml")
+        return re.search(str(self.dept) + ' ' + str(self.code) + ' ' + str(self.sect), html.get_text()) == None
+        
     def open_gen_seats(self):
         raw_html = urlopen(self.get_link(), timeout = 5)
         html = BeautifulSoup(raw_html, "lxml")
@@ -24,7 +27,8 @@ class section(models.Model):
         return int(re.search(r'\d+', gen_table_line).group(0)) > 0
 
     def create_section(self):
-        if section_is_valid()
+        if section_is_valid():
+            self.save()
 
 class customUserManager(BaseUserManager):
     # Custom user manager to handle our custom user
