@@ -24,5 +24,5 @@ router.register(r'section', views.SectionViewSet)
 
 urlpatterns = [
     re_path(r'^', include(router.urls)),
-    re_path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    re_path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

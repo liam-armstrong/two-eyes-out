@@ -12,6 +12,7 @@ djangorestframework = "*"
 lxml = "*"
 
 [dev-packages]
+httpie = "*"
 
 [requires]
 python_version = "3.6"

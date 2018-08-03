@@ -1,34 +1,46 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.http import HttpResponse 
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import re, time
+
+class sectionManager(models.Manager):
+    
+    def is_valid_section(self, a, b, c):
+        link = 'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=' + a + '&course=' + b + '&section=' + c
+        raw_html = urlopen(link, timeout = 5)
+        html = BeautifulSoup(raw_html, "lxml")
+        return re.search("Outline/Syllabus", html.get_text()) != None
+
+    def create(self, dept, code, sect):
+        if not sectionManager().is_valid_section(dept, code, sect):
+            raise ValueError("Not a valid course")
+        section = self.model(dept = dept, code = code, sect = sect)
+        section.save()
+        return section
 
 class section(models.Model):
     dept = models.CharField(max_length = 5)
     code = models.CharField(max_length = 5)
     sect = models.CharField(max_length = 5)
+    seats = models.IntegerField(default = 0)
+    objects = sectionManager()
+
+    class Meta:
+        unique_together = ('dept', 'code', 'sect')
+
     def __str__(self):
         return self.dept + " " + self.code + " " + self.sect
 
     def get_link(self):
         return 'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=' + str(self.dept) + '&course=' + str(self.code) + '&section=' + str(self.sect)
 
-    # write this function and have it validate section
-    def is_valid_section(self):
-        raw_html = urlopen(self.get_link(), timeout = 5)
-        html = BeautifulSoup(raw_html, "lxml")
-        return re.search(str(self.dept) + ' ' + str(self.code) + ' ' + str(self.sect), html.get_text()) == None
-        
-    def open_gen_seats(self):
+    def get_open_gen_seats(self):
         raw_html = urlopen(self.get_link(), timeout = 5)
         html = BeautifulSoup(raw_html, "lxml")
         gen_table_line = re.search(r"General Seats Remaining:\d+",html.get_text()).group(0)
         return int(re.search(r'\d+', gen_table_line).group(0)) > 0
-
-    def create_section(self):
-        if section_is_valid():
-            self.save()
 
 class customUserManager(BaseUserManager):
     # Custom user manager to handle our custom user
