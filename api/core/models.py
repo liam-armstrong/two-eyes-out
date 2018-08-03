@@ -24,7 +24,7 @@ class section(models.Model):
     dept = models.CharField(max_length = 5)
     code = models.CharField(max_length = 5)
     sect = models.CharField(max_length = 5)
-    seats = models.IntegerField(default = 0)
+    open_seats = models.BooleanField(default = False)
     objects = sectionManager()
 
     class Meta:
@@ -36,11 +36,13 @@ class section(models.Model):
     def get_link(self):
         return 'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=' + str(self.dept) + '&course=' + str(self.code) + '&section=' + str(self.sect)
 
-    def get_open_gen_seats(self):
+    def update_seats(self):
         raw_html = urlopen(self.get_link(), timeout = 5)
         html = BeautifulSoup(raw_html, "lxml")
         gen_table_line = re.search(r"General Seats Remaining:\d+",html.get_text()).group(0)
-        return int(re.search(r'\d+', gen_table_line).group(0)) > 0
+        open_seats = int(re.search(r'\d+', gen_table_line).group(0)) > 0
+        self.save(update_fields=["open_seats"], force_update=True) 
+        return open_seats
 
 class customUserManager(BaseUserManager):
     # Custom user manager to handle our custom user
