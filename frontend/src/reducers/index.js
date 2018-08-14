@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import * as actionType from '../actions/type'
+import * as actionType from '../actions/types'
 
 const tokenInitialState = null;
 const token = (state = tokenInitialState, action) => {
