@@ -7,3 +7,5 @@ Since there is no officially offered solution other than checking the webpage re
 *__two-eyes-out__* or _2eo_ is my solution to this problem. The current 3rd party options work very well, but lack some quality of life features that makes the experiance un-necessarily stressful
 
 This product is still in early stages of development and there is no available version for the public yet
+
+Tech Stack: Django REST API and React + Redux frontend
