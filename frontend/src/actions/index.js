@@ -6,3 +6,24 @@ export const setToken = (data) => {
     data
   }
 }
+
+export const getSections = (data) => {
+  return {
+    type: actionType.GET_SECTIONS,
+    data
+  }
+}
+
+export const updateSection = (data) => {
+  return {
+    type: actionType.UPDATE_SECTION,
+    data
+  }
+}
+
+export const updateUser = (data) => {
+  return {
+    type: actionType.UPDATE_USER,
+    data
+  }
+}
