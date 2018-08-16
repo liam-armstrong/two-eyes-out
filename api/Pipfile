@@ -11,6 +11,7 @@ djangorestframework = "*"
 "psycopg2" = "*"
 lxml = "*"
 djangorestframework-jwt = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 httpie = "*"
