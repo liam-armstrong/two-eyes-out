@@ -2,20 +2,22 @@ import axios from 'axios';
 import _ from 'lodash';
 import store from '../store';
 import { setToken } from '../actions';
-import { URL, LOGIN } from '../config/Api';
+import { URL, LOGIN } from '../config/api';
 
 export function InvalidCredentialsException(message) {
     this.message = message;
     this.name = 'InvalidCredentialsException'
 }
 
-export function login(email, password) {
+export function loginFn(email, password) {
+    console.log("POSTING " + email + " + " + password + " to " + URL + LOGIN);
     return axios
         .post(URL + LOGIN, {
             email,
             password
         })
         .then(function (response) {
+            console.log("Status: " + response.status)
             store.dispatch(setToken(response.data.token));
         })
         .catch(function (error) {

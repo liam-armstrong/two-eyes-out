@@ -18,6 +18,8 @@ const slist = (state = slistInitialState, action) => {
     switch(action.type) {
         case actionType.GET_SECTIONS:
             return action.data
+        case actionType.UPDATE_SECTION:
+            return action.data
         default:
             return state;
     }
@@ -25,6 +27,7 @@ const slist = (state = slistInitialState, action) => {
 
 const appReducer = combineReducers({
     token,
+    slist
 })
 
 const rootReducer = (state, action) => {
