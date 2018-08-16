@@ -10,6 +10,7 @@ djangorestframework = "*"
 "bs4" = "*"
 "psycopg2" = "*"
 lxml = "*"
+djangorestframework-jwt = "*"
 
 [dev-packages]
 httpie = "*"

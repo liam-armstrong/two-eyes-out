@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from rest_framework import routers
+from rest_framework_jwt.views import obtain_jwt_token
 from django.urls import re_path, include
 from core import views
 
@@ -24,5 +25,5 @@ router.register(r'section', views.SectionViewSet)
 
 urlpatterns = [
     re_path(r'^', include(router.urls)),
-    re_path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    re_path(r'^api-token-auth/', obtain_jwt_token),
 ]
