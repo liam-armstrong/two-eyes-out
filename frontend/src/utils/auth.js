@@ -32,3 +32,7 @@ export function loginFn(email, password) {
 export function loggedIn () {
     return store.getState().token == null;
 }
+
+export function logout () {
+    return store.dispatch(setToken(null));
+}

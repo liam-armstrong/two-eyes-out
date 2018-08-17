@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 import './App.css';
 import { setToken } from './actions/index'
 import { connect } from 'react-redux';
-import login from './components/login.jsx'
+import Landing from './components/landing'
+import Nav from './components/nav'
 
 class App extends Component {
   render() {
     return (
-      <login />,
-      <h1>login</h1>
+      <div className = "container-fluid">
+        <Nav />
+        <Landing />
+        {this.props.token !== null &&
+          <span>{ this.props.token }</span>
+        }
+      </div>
     );
   }
 }

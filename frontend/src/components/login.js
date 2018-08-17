@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { loginFn } from '../utils/auth'
+import { loginFn } from '../utils/auth';
+import './login.css';
 
-export default class login extends Component {
+export default class Login extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this);
@@ -26,22 +27,25 @@ export default class login extends Component {
 
   render() {
     return (
-      <login>
+      <div style={{ height: "200px", width: "300px" }}>
         <form onSubmit={this.handleSubmit}>
           <input 
               id ="email"
-              autoFocus
               type="email"
+              placeholder="email"
               value={this.state.email}
               onChange={this.handleChange}></input><br></br>
-          <input 
+          <input
+              style = {{ width: "60%"}}
               id="password"
+              placeholder="password"
               value={this.state.password}
               onChange={this.handleChange}
               type="password"></input><br></br>
-          <button type="submit">Login</button>
+          <button type="submit" style = {{ color : "blue" }}>Login</button><br></br>
+          <button href="javascript.void(0);">Register</button>
         </form>
-      </login>
+      </div>
     );
   }
 }
