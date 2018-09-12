@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.http import HttpResponse 
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
-from tasks import alert_all_users
+from . import tasks
 import re, time
 
 class sectionManager(models.Manager):
