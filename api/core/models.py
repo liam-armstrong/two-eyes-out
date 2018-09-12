@@ -3,10 +3,10 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.http import HttpResponse 
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
+from tasks import alert_all_users
 import re, time
 
 class sectionManager(models.Manager):
-    
     def is_valid_section(self, a, b, c):
         # General function plugs in section information to a link and tests that it is not a blank page
         link = 'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=' + a + '&course=' + b + '&section=' + c
@@ -46,7 +46,9 @@ class section(models.Model):
         html = BeautifulSoup(raw_html, "lxml") # BeautifulSoup to refine html TODO Check if this is required for RE search to work 
         gen_table_line = re.search(r"General Seats Remaining:\d+",html.get_text()).group(0) # Pulls table line displaying open gen seats
         open_seats = int(re.search(r'\d+', gen_table_line).group(0)) > 0 #pulls int from line and checks if it's not 0
-        self.save(update_fields=["open_seats"], force_update=True) #updates boolean value for section
+        if open_seats:
+            alert_all_users(self)
+            self.save(update_fields=["open_seats"], force_update=True) #updates boolean value for section
         return open_seats
 
 class customUserManager(BaseUserManager):
@@ -74,6 +76,7 @@ class customUserManager(BaseUserManager):
 class customUser(AbstractBaseUser, PermissionsMixin):
     #Custom user for Django Auth with email as username and fields removed
     email = models.EmailField(unique=True, null=True)
+    activated = models.BooleanField(default = False)
     sections = models.ManyToManyField(section)
     is_staff = models.BooleanField(
         #Django auth default field
@@ -105,3 +108,6 @@ class customUser(AbstractBaseUser, PermissionsMixin):
     
     def get_short_name(self):
         return self.email
+
+    def alertUser(self, section):
+        print("user: " + self.email + " has open section: " + str(section)) # placeholder method body, replace with email fn
