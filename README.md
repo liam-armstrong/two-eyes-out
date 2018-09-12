@@ -22,7 +22,9 @@ ___
     [x] Web scraping function for checking open seats
     [x] JSON web token configuration and end point setup
     [x] Celery and Redis for task management setup
-    [] Celery tasks for seat monitering and communicating with user
+    [x] Celery tasks for seat monitering and communicating with user
+    [x] Docker setup and image creation
+    [x] Deployment on DigitalOcean droplet and Docker autobuild
     [] Endpoint for registered section population
     [] Email API implementation
 ```
