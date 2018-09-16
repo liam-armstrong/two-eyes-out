@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    container_name: 2eo_db
+  redis:
+    image: redis
+    container_name: 2eo_redis
+  api:
+    build: ./api
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    container_name: 2eo_api
+  frontend:
+    build: ./frontend
+    volumes:
+      - .:/frontend
+    ports:
+      - "80:80"
+    container_name: 2eo_frontend
