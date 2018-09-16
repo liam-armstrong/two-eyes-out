@@ -1,15 +1,13 @@
-FROM node:8
+FROM node:8.12 as build-deps
+RUN npm install -g yarn
+WORKDIR /usr/src/app
+COPY package.json yarn.lock ./
+RUN yarn install
+COPY . ./
+RUN yarn build
 
-ADD yarn.lock /yarn.lock
-ADD package.json /package.json
-
-ENV NODE_PATH=/node_modules
-ENV PATH=$PATH:/node_modules/.bin
-
-RUN yarn
-
-WORKDIR /app
-ADD . /app
-
-ENTRYPOINT ["/bin/bash", "app/run.sh"]
-CMD ["start"]
+# Stage 2 - the production environment
+FROM nginx:1.15.3-alpine
+COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
