@@ -1,2 +1,3 @@
-/.vscode
+.\vscode
 2eo.code-workspace
+.\api\api\settings\secret.txt
