@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  2eo_DB:
+    image: postgres
+  2eo_api:
+    build: ./api
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - 2eo_DB
+  2eo_front:
+    build: ./frontend
+    command: yarn start
+    volumes:
+      - .:/frontend
+    ports:
+      - "80:80"
