@@ -1,5 +1,5 @@
-from .common import *
 import os, random
+from .settings import *
 
 SECRET_FILE = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'secret.txt')
 def keygenFn():
