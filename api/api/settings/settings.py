@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-
+from .keygen import keygenFn
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,9 +20,28 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+ALLOWED_HOSTS = ['159.203.33.149']
 
-ALLOWED_HOSTS = []
+# For dev enviroment, swap above with below
+# DEBUG = True
+# ALLOWED_HOSTS = ['*']
+# CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = (
+    '2eo.liam-armstrong.com',
+    'localhost:8000',
+    'localhost:80',
+    'localhost',
+    '127.0.0.1',
+    '127.0.0.1:80',
+    '2eo_frontend',
+    '2eo-frontend'
+)
+
+keygenFn()
+with open(SECRET_FILE, 'r') as secretfile:
+  SECRET_KEY = secretfile.read()
 
 # Application definition
 
@@ -50,8 +69,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'api.urls'
-
-CORS_ORIGIN_ALLOW_ALL = True
 
 TEMPLATES = [
     {
@@ -82,6 +99,16 @@ REST_FRAMEWORK = {
     )
 }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
+    }
+}
+
 #Redis config
 CACHES = {
     "default": {
@@ -95,7 +122,6 @@ CACHES = {
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
