@@ -20,13 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ['159.203.33.149', 'localhost']
-
-# For dev enviroment, swap above with below
-# DEBUG = True
-# ALLOWED_HOSTS = ['*']
-# CORS_ORIGIN_ALLOW_ALL = True
+DEBUG = False
+ALLOWED_HOSTS = ['159.203.33.149']
 
 CORS_ORIGIN_WHITELIST = (
     '2eo.liam-armstrong.com',
@@ -38,6 +33,11 @@ CORS_ORIGIN_WHITELIST = (
     '2eo_frontend',
     '2eo-frontend'
 )
+
+# For dev enviroment, swap above with below
+# DEBUG = True
+# ALLOWED_HOSTS = ['*']
+# CORS_ORIGIN_ALLOW_ALL = True
 
 keygenFn()
 with open(SECRET_FILE, 'r') as secretfile:
