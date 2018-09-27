@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from .keygen import keygenFn
+from .keygen import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,11 +23,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = False
 ALLOWED_HOSTS = ['159.203.33.149']
 
-# For dev enviroment, swap above with below
-# DEBUG = True
-# ALLOWED_HOSTS = ['*']
-# CORS_ORIGIN_ALLOW_ALL = True
-
 CORS_ORIGIN_WHITELIST = (
     '2eo.liam-armstrong.com',
     'localhost:8000',
@@ -38,6 +33,11 @@ CORS_ORIGIN_WHITELIST = (
     '2eo_frontend',
     '2eo-frontend'
 )
+
+# For dev enviroment, swap above with below
+# DEBUG = True
+# ALLOWED_HOSTS = ['*']
+# CORS_ORIGIN_ALLOW_ALL = True
 
 keygenFn()
 with open(SECRET_FILE, 'r') as secretfile:
