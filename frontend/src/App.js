@@ -10,9 +10,8 @@ class App extends Component {
     return (
       <div className = "container-fluid">
         <Nav />
-        <Landing />
-        {this.props.token !== null &&
-          <span>{ this.props.token }</span>
+        { this.props.token == null &&
+          <Landing />
         }
       </div>
     );

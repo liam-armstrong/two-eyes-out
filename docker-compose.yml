@@ -9,7 +9,6 @@ services:
     container_name: 2eo_redis
   api:
     build: ./api
-    command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/api
     ports:
@@ -24,3 +23,6 @@ services:
     ports:
       - "80:80"
     container_name: 2eo_frontend
+
+volumes:
+  postgres_data:
