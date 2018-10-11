@@ -5,3 +5,7 @@
  ADD requirements.txt /code/
  RUN pip install -r requirements.txt
  ADD . /code/
+ COPY start.sh /start.sh
+ EXPOSE 8000
+ RUN chmod +x start.sh
+ ENTRYPOINT ["sh", "/start.sh"]

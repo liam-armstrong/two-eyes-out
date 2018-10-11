@@ -21,29 +21,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['159.203.33.149']
-
-CORS_ORIGIN_WHITELIST = (
-    '2eo.liam-armstrong.com',
-    'localhost:8000',
-    'localhost:80',
-    'localhost',
-    '127.0.0.1',
-    '127.0.0.1:80',
-    '2eo_frontend',
-    '2eo-frontend'
-)
+ALLOWED_HOSTS = ['178.128.190.112', 'localhost']
 
 # For dev enviroment, swap above with below
 # DEBUG = True
 # ALLOWED_HOSTS = ['*']
-# CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 keygenFn()
 with open(SECRET_FILE, 'r') as secretfile:
   SECRET_KEY = secretfile.read()
-
-# Application definition
 
 INSTALLED_APPS = [
     'rest_framework',
