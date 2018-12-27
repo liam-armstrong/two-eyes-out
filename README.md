@@ -40,5 +40,3 @@ ___
 
 Once basic functionality is completed for both back and front end, both will be deployed to a DigitalOcean droplet with Docker and published to liam-armstrong.com/2eo
 
-Expected timeline for MVP completion is Mid-October
-
