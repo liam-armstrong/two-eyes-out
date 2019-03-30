@@ -1,6 +1,5 @@
 # two-eyes-out
-___
-![Homepage Image](designs/landing.png?raw=true "Landing Page")
+![Homepage Image](designs/landing-actual.png?raw=true "Landing Page")
 
 If a class is full at UBC, students cannot register until a seat opens in their desired sections. 
 
