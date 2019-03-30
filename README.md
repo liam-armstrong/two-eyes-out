@@ -1,5 +1,7 @@
 # two-eyes-out
 ___
+![Homepage Image](designs/landing.png?raw=true "Landing Page")
+
 If a class is full at UBC, students cannot register until a seat opens in their desired sections. 
 
 Since there is no officially offered solution other than checking the webpage regularly, 3rd party tools have been created to watch lecture web pages for openings and alert the students when a seat opens up.
