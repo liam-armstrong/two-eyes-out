@@ -20,7 +20,8 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   sections: state.sections,
-  token: state.token
+  token: state.token,
+  email: state.email
 });
 
 const mapActionstoProps = {

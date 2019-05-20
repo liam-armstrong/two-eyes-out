@@ -22,7 +22,7 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    loginFn(this.state.email, this.state.password)
+    loginFn(this.state.email, this.state.password);
   }
 
   render() {

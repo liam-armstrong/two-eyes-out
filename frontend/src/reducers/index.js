@@ -16,9 +16,18 @@ const token = (state = tokenInitialState, action) => {
 const slistInitialState = [];
 const slist = (state = slistInitialState, action) => {
     switch(action.type) {
-        case actionType.GET_SECTIONS:
+        case actionType.SET_SECTIONS:
             return action.data
-        case actionType.UPDATE_SECTION:
+        default:
+            return state;
+    }
+}
+
+//Email initial state and reducer
+const emailInitialState = null;
+const email = (state = emailInitialState, action) => {
+    switch(action.type) {
+        case actionType.SET_EMAIL:
             return action.data
         default:
             return state;
@@ -27,7 +36,8 @@ const slist = (state = slistInitialState, action) => {
 
 const appReducer = combineReducers({
     token,
-    slist
+    slist,
+    email
 })
 
 const rootReducer = (state, action) => {
