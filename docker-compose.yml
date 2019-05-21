@@ -3,19 +3,35 @@ version: '3'
 services:
   db:
     image: postgres
+    hostname: db
+    environment:
+      - POSTGRES_USER= ${POSTGRES_USER}
+      - POSTGRES_PASSWORD= ${POSTGRES_PASSWORD}
+    ports:
+      - 5432
     container_name: 2eo_db
+
   redis:
     image: redis
     container_name: 2eo_redis
+
   api:
     build: ./api
     volumes:
       - .:/api
     ports:
       - "8000:8000"
+    links:
+      - db
     depends_on:
       - db
+    environment:
+      - POSTGRES_USER= ${POSTGRES_USER}
+      - POSTGRES_PASSWORD= ${POSTGRES_PASSWORD}
+      - DJANGO_SU_EMAIL= ${DJANGO_SU_EMAIL}
+      - DJANGO_SU_PASSWORD= ${DJANGO_SU_PASSWORD}
     container_name: 2eo_api
+    
   frontend:
     build: ./frontend
     volumes:
@@ -23,6 +39,3 @@ services:
     ports:
       - "80:80"
     container_name: 2eo_frontend
-
-volumes:
-  postgres_data:
