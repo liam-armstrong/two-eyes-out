@@ -30,7 +30,7 @@ input:focus {
 }
 
 input:invalid {
-    border-color: red;
+    border-color: orange;
 }
 
 form {

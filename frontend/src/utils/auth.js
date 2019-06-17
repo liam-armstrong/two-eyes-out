@@ -1,7 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
 import store from '../store';
-import { setToken, setEmail } from '../actions';
+import { setToken, setEmail, setError } from '../actions';
 import { URL, LOGIN } from '../config/api';
 
 export function InvalidCredentialsException(message) {
@@ -18,16 +18,25 @@ export function loginFn(email, password) {
         })
         .then(function (response) {
             console.log("Status: " + response.status);
-            store.dispatch(setToken(response.data.token));
-            store.dispatch(setEmail(email));
+            if(response.status === 200) {
+                store.dispatch(setToken(response.data.token));
+                store.dispatch(setEmail(email));
+                store.dispatch(setError(false));
+            } else {
+                throw new InvalidCredentialsException();
+            }
         })
         .catch(function (error) {
+            console.log(error);
+            store.dispatch(setError(true));
+            throw new InvalidCredentialsException(error);
             //if error due to invalid credentials raise different error
-            if (_.get(error, 'response.status') === 400) {
-                throw new InvalidCredentialsException(error);
-            }
-            throw error;
-        });
+            // if (_.get(error, 'response.status') === 400) {
+            //     throw new InvalidCredentialsException(error);
+            // }
+            // throw error;
+        })
+        ;
 }   
 
 export function loggedIn () {

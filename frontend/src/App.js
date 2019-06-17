@@ -11,7 +11,7 @@ class App extends Component {
       <div className = "container-fluid">
         <Nav />
         { this.props.token == null &&
-          <Landing />
+          <Landing logerror = {this.props.logerror}/>
         }
       </div>
     );
@@ -21,7 +21,8 @@ class App extends Component {
 const mapStateToProps = state => ({
   sections: state.sections,
   token: state.token,
-  email: state.email
+  email: state.email,
+  logerror: state.logerror
 });
 
 const mapActionstoProps = {

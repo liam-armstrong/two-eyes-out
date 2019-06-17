@@ -20,3 +20,10 @@ export const setSections = (data) => {
     data
   }
 }
+
+export const setError = (data) => {
+  return {
+    type: actionType.SET_ERROR,
+    data
+  }
+}

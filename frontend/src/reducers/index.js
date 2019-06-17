@@ -34,10 +34,22 @@ const email = (state = emailInitialState, action) => {
     }
 }
 
+//Login Error initial state and reducer
+const logerrorInitialState = false;
+const logerror = (state = logerrorInitialState, action) => {
+    switch(action.type) {
+        case actionType.SET_ERROR:
+            return action.data
+        default:
+            return state;
+    }
+}
+
 const appReducer = combineReducers({
     token,
     slist,
-    email
+    email,
+    logerror
 })
 
 const rootReducer = (state, action) => {
