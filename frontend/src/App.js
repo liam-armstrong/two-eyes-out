@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import './App.css';
-import { setToken } from './actions/index'
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import './App.css'
+import { connect } from 'react-redux'
 import Landing from './components/landing'
+import Core from './components/core'
 import Nav from './components/nav'
 
 class App extends Component {
@@ -12,6 +12,12 @@ class App extends Component {
         <Nav />
         { this.props.token == null &&
           <Landing />
+<<<<<<< Updated upstream
+=======
+        }
+        { this.props.token != null &&
+          <Core />
+>>>>>>> Stashed changes
         }
       </div>
     );
@@ -19,12 +25,13 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
+<<<<<<< Updated upstream
   sections: state.sections,
   token: state.token
+=======
+  token: state.token,
+  email: state.email
+>>>>>>> Stashed changes
 });
 
-const mapActionstoProps = {
-  handleSubmit: setToken
-};
-
-export default connect(mapStateToProps, mapActionstoProps)(App);
+export default connect(mapStateToProps)(App);

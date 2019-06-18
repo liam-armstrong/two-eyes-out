@@ -17,8 +17,15 @@ export function loginFn(email, password) {
             password
         })
         .then(function (response) {
+<<<<<<< Updated upstream
             console.log("Status: " + response.status)
             store.dispatch(setToken(response.data.token));
+=======
+            console.log("Status: " + response.status);
+            store.dispatch(setToken(response.data.token));
+            store.dispatch(setEmail(email));
+            store.dispatch(setError(false));
+>>>>>>> Stashed changes
         })
         .catch(function (error) {
             //if error due to invalid credentials raise different error
