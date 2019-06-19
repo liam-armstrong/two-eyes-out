@@ -18,13 +18,9 @@ export function loginFn(email, password) {
         })
         .then(function (response) {
             console.log("Status: " + response.status);
-            if(response.status === 200) {
-                store.dispatch(setToken(response.data.token));
-                store.dispatch(setEmail(email));
-                store.dispatch(setError(false));
-            } else {
-                throw new InvalidCredentialsException();
-            }
+            store.dispatch(setToken(response.data.token));
+            store.dispatch(setEmail(email));
+            store.dispatch(setError(false));
         })
         .catch(function (error) {
             console.log(error);

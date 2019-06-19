@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import '../App.css';
+import { setToken } from '../actions/index'
 import { loginFn } from '../utils/auth';
 import './login.css';
 import store from '../store';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this);
@@ -50,3 +52,14 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  logerror: state.logerror
+});
+
+const mapActionstoProps = {
+  handleSubmit: setToken
+};
+
+export default connect(mapStateToProps, mapActionstoProps)(Login);
+

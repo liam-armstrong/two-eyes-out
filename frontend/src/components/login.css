@@ -48,3 +48,22 @@ form button {
     cursor: pointer;
     font-size: 1.1em;
 }
+
+.inline-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.inline-form input{
+    width: 10vw; 
+    text-align: center; 
+    margin: 15px;
+}
+
+.inline-form button{
+    width: 10vw; 
+    text-align: center; 
+    margin: 15px 0px;
+}
