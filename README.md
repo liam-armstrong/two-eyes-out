@@ -1,5 +1,6 @@
 # two-eyes-out
-___
+![Homepage Image](designs/landing-actual.png?raw=true "Landing Page")
+
 If a class is full at UBC, students cannot register until a seat opens in their desired sections. 
 
 Since there is no officially offered solution other than checking the webpage regularly, 3rd party tools have been created to watch lecture web pages for openings and alert the students when a seat opens up.
@@ -39,6 +40,4 @@ ___
 ```
 
 Once basic functionality is completed for both back and front end, both will be deployed to a DigitalOcean droplet with Docker and published to liam-armstrong.com/2eo
-
-Expected timeline for MVP completion is Mid-October
 

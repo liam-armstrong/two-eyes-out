@@ -4,6 +4,7 @@ import '../App.css';
 import { setToken } from '../actions/index'
 import { loginFn } from '../utils/auth';
 import './login.css';
+import store from '../store';
 
 class Login extends Component {
   constructor(props) {
@@ -24,8 +25,9 @@ class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    loginFn(this.state.email, this.state.password)
+    loginFn(this.state.email, this.state.password);
   }
+
 
   render() {
     return (
@@ -37,13 +39,12 @@ class Login extends Component {
               placeholder="email"
               value={this.state.email}
               onChange={this.handleChange}></input><br></br>
-          <input
-              style = {{ width: "60%"}}
+         <input style = { this.props.logerror ? { width: "60%", borderColor: "red" } : { width: "60%" }}
               id="password"
               placeholder="password"
               value={this.state.password}
               onChange={this.handleChange}
-              type="password"></input><br></br>
+              type="password"></input> <br></br>
           <button type="submit" style = {{ color : "blue" }}>Login</button><br></br>
           <button href="javascript.void(0);">Register</button>
         </form>

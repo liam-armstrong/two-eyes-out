@@ -12,7 +12,7 @@ export default class Landing extends Component {
       <br></br><br></br>To begin, login or register</h3>
       </div>
       <div className="col-md-5">
-           <Login />
+           <Login logerror = {this.props.logerror}/>
       </div>
   </div>
     );

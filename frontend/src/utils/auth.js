@@ -1,7 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
 import store from '../store';
-import { setToken } from '../actions';
+import { setToken, setEmail, setError } from '../actions';
 import { URL, LOGIN } from '../config/api';
 
 export function InvalidCredentialsException(message) {
@@ -17,23 +17,22 @@ export function loginFn(email, password) {
             password
         })
         .then(function (response) {
-<<<<<<< Updated upstream
-            console.log("Status: " + response.status)
-            store.dispatch(setToken(response.data.token));
-=======
             console.log("Status: " + response.status);
             store.dispatch(setToken(response.data.token));
             store.dispatch(setEmail(email));
             store.dispatch(setError(false));
->>>>>>> Stashed changes
         })
         .catch(function (error) {
+            console.log(error);
+            store.dispatch(setError(true));
+            throw new InvalidCredentialsException(error);
             //if error due to invalid credentials raise different error
-            if (_.get(error, 'response.status') === 400) {
-                throw new InvalidCredentialsException(error);
-            }
-            throw error;
-        });
+            // if (_.get(error, 'response.status') === 400) {
+            //     throw new InvalidCredentialsException(error);
+            // }
+            // throw error;
+        })
+        ;
 }   
 
 export function loggedIn () {
@@ -41,5 +40,6 @@ export function loggedIn () {
 }
 
 export function logout () {
+    store.dispatch(setEmail(null));
     return store.dispatch(setToken(null));
 }

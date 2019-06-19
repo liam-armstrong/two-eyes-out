@@ -12,12 +12,9 @@ class App extends Component {
         <Nav />
         { this.props.token == null &&
           <Landing />
-<<<<<<< Updated upstream
-=======
         }
         { this.props.token != null &&
           <Core />
->>>>>>> Stashed changes
         }
       </div>
     );
@@ -25,13 +22,9 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-<<<<<<< Updated upstream
   sections: state.sections,
-  token: state.token
-=======
   token: state.token,
   email: state.email
->>>>>>> Stashed changes
 });
 
 export default connect(mapStateToProps)(App);

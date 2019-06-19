@@ -7,23 +7,23 @@ export const setToken = (data) => {
   }
 }
 
-export const getSections = (data) => {
+export const setEmail = (data) => {
   return {
-    type: actionType.GET_SECTIONS,
+    type: actionType.SET_EMAIL,
     data
   }
 }
 
-export const updateSection = (data) => {
+export const setSections = (data) => {
   return {
-    type: actionType.UPDATE_SECTION,
+    type: actionType.SET_SECTIONS,
     data
   }
 }
 
-export const updateUser = (data) => {
+export const setError = (data) => {
   return {
-    type: actionType.UPDATE_USER,
+    type: actionType.SET_ERROR,
     data
   }
 }
