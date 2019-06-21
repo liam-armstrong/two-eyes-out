@@ -12,13 +12,14 @@ class sectionManager(models.Manager):
         link = 'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=' + a + '&course=' + b + '&section=' + c
         raw_html = urlopen(link, timeout = 5)
         html = BeautifulSoup(raw_html, "lxml")
-        return re.search("Outline/Syllabus", html.get_text()) != None
+        return re.search(r"General Seats Remaining:\d+", html.get_text()) != None
 
     def create(self, dept, code, sect):
         if not sectionManager().is_valid_section(dept, code, sect):
-            raise ValueError("Not a valid course")
+            raise ValueError("Not a valid course says me")
         section = self.model(dept = dept, code = code, sect = sect)
         section.save()
+        section.update_seats()
         return section
 
 class section(models.Model):
@@ -46,9 +47,7 @@ class section(models.Model):
         html = BeautifulSoup(raw_html, "lxml") # BeautifulSoup to refine html TODO Check if this is required for RE search to work 
         gen_table_line = re.search(r"General Seats Remaining:\d+",html.get_text()).group(0) # Pulls table line displaying open gen seats
         open_seats = int(re.search(r'\d+', gen_table_line).group(0)) > 0 #pulls int from line and checks if it's not 0
-        if open_seats:
-            alert_all_users(self)
-            self.save(update_fields=["open_seats"], force_update=True) #updates boolean value for section
+        self.save(update_fields=["open_seats"], force_update=True) #updates boolean value for section
         return open_seats
 
 class customUserManager(BaseUserManager):
@@ -109,5 +108,8 @@ class customUser(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.email
 
-    def alertUser(self, section):
-        print("user: " + self.email + " has open section: " + str(section)) # placeholder method body, replace with email fn
+    def alertUser(self, sec):
+        print("user: " + self.email + " has open section: " + str(sec)) # placeholder method body, replace with email fn
+    
+    def addSection(self, section):
+        self.sections.add(sec)

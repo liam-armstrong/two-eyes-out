@@ -9,9 +9,8 @@ def check_seats():
         section.update_seats()
 
 @task(name="alert_all_users")
-def alert_all_users(id):
-    section = models.section.objects.get(id = id)
-    for models.customUser in models.section.customuser_set.all():
+def alert_all_users(sect):
+    for models.customUser in sect.customuser_set.all():
         print(str(customUser)) #TODO actually email/alert user here
 
 @task(name="send_registration_email")
