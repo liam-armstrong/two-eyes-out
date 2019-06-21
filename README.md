@@ -26,7 +26,8 @@ ___
     [x] Celery tasks for seat monitering and communicating with user
     [x] Docker setup and image creation
     [x] Deployment on DigitalOcean droplet and Docker autobuild
-    [] Endpoint for registered section population
+    [] Postman scripting automated API endpoint testing 
+    [x] Endpoint for registered section population
     [] Email API implementation
 ```
 **Frontend:**
@@ -35,8 +36,8 @@ ___
     [x] React app configuration
     [x] Redux reducers/actions for token and section list
     [x] Auth utils with Axios and Lodash
-    [x] Components: Login, Nav, Landing page
-    [] Components: Section list,  Section form, Section page, User settings
+    [x] Components: Login, Nav, Landing page, Section form, Section page
+    [] Components: Section list, User settings
 ```
 
 Once basic functionality is completed for both back and front end, both will be deployed to a DigitalOcean droplet with Docker and published to liam-armstrong.com/2eo
