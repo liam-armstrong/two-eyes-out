@@ -21,7 +21,8 @@ from core import views
 
 section_list = views.SectionsViewSet.as_view({
     'get': 'list',
-    'post': 'create'
+    'post': 'create',
+    'delete': 'remove'
 })
 
 # router = routers.DefaultRouter()
@@ -30,5 +31,5 @@ section_list = views.SectionsViewSet.as_view({
 urlpatterns = [
     # re_path(r'^', include(router.urls)),
     re_path(r'api-token-auth', obtain_jwt_token),
-    re_path(r'get-sections', section_list)
+    re_path(r'sections', section_list)
 ]

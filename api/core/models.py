@@ -27,7 +27,6 @@ class sectionManager(models.Manager):
             sect = self.get(dept=dept, code=code, sect=sect)
         except section.DoesNotExist:
             sect = self.create(dept=dept, code=code, sect=sect)
-            
         return sect
 
 class section(models.Model):
@@ -121,3 +120,6 @@ class customUser(AbstractBaseUser, PermissionsMixin):
     
     def addSection(self, sec):
         self.sections.add(sec)
+
+    def removeSection(self, sec):
+        self.sections.remove(sec)

@@ -15,6 +15,15 @@ class sectionSerializer(serializers.HyperlinkedModelSerializer):
         )
 
         return section_object
+    
+    def get(self, attrs):
+        section_object = models.section.objects.get(
+            dept = attrs.get('dept'),
+            code = attrs.get('code'),
+            sect = attrs.get('sect')
+        )
+
+        return section_object
 
     def get_unique_together_validators(self):
         return []
