@@ -13,14 +13,22 @@ class sectionManager(models.Manager):
         raw_html = urlopen(link, timeout = 5)
         html = BeautifulSoup(raw_html, "lxml")
         return re.search(r"General Seats Remaining:\d+", html.get_text()) != None
-
+    
     def create(self, dept, code, sect):
         if not sectionManager().is_valid_section(dept, code, sect):
-            raise ValueError("Not a valid course says me")
+            raise ValueError("Not a valid course")
         section = self.model(dept = dept, code = code, sect = sect)
         section.save()
         section.update_seats()
         return section
+
+    def get_or_create(self, dept, code, sect):
+        try:
+            sect = self.get(dept=dept, code=code, sect=sect)
+        except section.DoesNotExist:
+            sect = self.create(dept=dept, code=code, sect=sect)
+            
+        return sect
 
 class section(models.Model):
     # Model to represent a UBC course section
@@ -111,5 +119,5 @@ class customUser(AbstractBaseUser, PermissionsMixin):
     def alertUser(self, sec):
         print("user: " + self.email + " has open section: " + str(sec)) # placeholder method body, replace with email fn
     
-    def addSection(self, section):
+    def addSection(self, sec):
         self.sections.add(sec)
