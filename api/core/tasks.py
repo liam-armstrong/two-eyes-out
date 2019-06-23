@@ -5,8 +5,9 @@ from . import models
 
 @periodic_task(run_every=(crontab(minute='*/3')), name="check_seats", ignore_result=True)
 def check_seats():
-    for section in models.section.objects.filter(open_seats = False):
-        section.update_seats()
+    for section in models.section.objects.all():
+        if section.update_seats():
+                alert_all_users(section)
 
 @task(name="alert_all_users")
 def alert_all_users(sect):
@@ -14,6 +15,6 @@ def alert_all_users(sect):
         print(str(customUser)) #TODO actually email/alert user here
 
 @task(name="send_registration_email")
-def send_registration_email(id):
+def send_registration_email(user):
     print("") #TODO actually email/alert user here
     

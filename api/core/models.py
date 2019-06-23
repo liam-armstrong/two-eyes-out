@@ -83,7 +83,8 @@ class customUser(AbstractBaseUser, PermissionsMixin):
     #Custom user for Django Auth with email as username and fields removed
     email = models.EmailField(unique=True, null=True)
     activated = models.BooleanField(default = False)
-    sections = models.ManyToManyField(section)
+    sections = models.ManyToManyField(section, related_name="sections")
+    inactive_sections = models.ManyToManyField(section, related_name="inactive_sections")
     is_staff = models.BooleanField(
         #Django auth default field
         ('staff status'),

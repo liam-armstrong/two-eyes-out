@@ -17,9 +17,9 @@ class SectionsViewSet(viewsets.ModelViewSet):
     def list(self, request):
         permission_classes = (permissions.IsAuthenticated,)
         authentication_classes = (JSONWebTokenAuthentication,)
-        queryset = request.user.sections.all()
-        serial = serializer.sectionSerializer(queryset, many=True)
-        return Response(serial.data)
+        activeSerial = serializer.sectionSerializer(request.user.sections.all(), many=True, context={'is_active': True})
+        inactiveSerial = serializer.sectionSerializer(request.user.inactive_sections.all(), many=True, context={'is_active': False})
+        return Response(activeSerial.data + inactiveSerial.data, status=status.HTTP_200_OK)
 
     def create(self, request):
         permission_classes = (permissions.IsAuthenticated,)
