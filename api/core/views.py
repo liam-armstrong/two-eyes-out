@@ -34,8 +34,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
             return Response({'detail': 'Not a Valid Course'}, status=status.HTTP_400_BAD_REQUEST)
 
         request.user.addSection(section)
-        usersectionSerializer = serializer.sectionSerializer(request.user.sections.all(), many=True)
-        return Response(usersectionSerializer.data, status=status.HTTP_201_CREATED)
+        return Response(serial.validated_data, status=status.HTTP_201_CREATED)
 
     def remove(self, request):
         permission_classes = (permissions.IsAuthenticated,)
@@ -46,16 +45,37 @@ class SectionsViewSet(viewsets.ModelViewSet):
 
         try:
             section = serial.get(serial.validated_data)
-        except:
+        except ValueError:
             return Response({'detail': 'Course Does Not Exist'}, status=status.HTTP_400_BAD_REQUEST)
+
+        print(str(section))
 
         try:
             request.user.removeSection(section)
-        except:
-            return Response({'detail': request.user + " is not related to " + section}, status=status.HTTP_400_BAD_REQUEST)
+        except ValueError:
+            return Response({'detail': str(request.user) + " is not related to " + str(section)}, status=status.HTTP_400_BAD_REQUEST)
 
-        usersectionSerializer = serializer.sectionSerializer(request.user.sections.all(), many=True)
-        return Response(usersectionSerializer.data, status=status.HTTP_200_OK)
+        return Response(serial.validated_data, status=status.HTTP_200_OK)
+
+    def flipActivation(self, request):
+        permission_classes = (permissions.IsAuthenticated,)
+        authentication_classes = (JSONWebTokenAuthentication,)
+        serial = serializer.sectionSerializer(data=request.data)
+        if serial.is_valid() is not True:
+            return Response(serial.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            section = serial.get(serial.validated_data)
+        except ValueError:
+            return Response({'detail': 'Course Does Not Exist'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            request.user.flipActivation(section)
+        except ValueError:
+            return Response({'detail': str(request.user) + " is not related to " + str(section)}, status=status.HTTP_400_BAD_REQUEST)
+
+        activeSerial = serializer.sectionSerializer(section, context={'is_active': request.user.getActivationStatus(section)})
+        return Response(activeSerial.data, status=status.HTTP_200_OK)
 
         
         

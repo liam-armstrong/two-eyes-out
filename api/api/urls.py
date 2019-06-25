@@ -22,7 +22,8 @@ from core import views
 section_list = views.SectionsViewSet.as_view({
     'get': 'list',
     'post': 'create',
-    'delete': 'remove'
+    'delete': 'remove',
+    'patch': 'flipActivation'
 })
 
 # router = routers.DefaultRouter()

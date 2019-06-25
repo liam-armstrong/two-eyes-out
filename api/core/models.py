@@ -123,4 +123,30 @@ class customUser(AbstractBaseUser, PermissionsMixin):
         self.sections.add(sec)
 
     def removeSection(self, sec):
-        self.sections.remove(sec)
+        if sec in self.sections.all():
+            self.sections.remove(sec)
+        elif sec in self.inactive_sections.all():
+            self.inactive_sections.remove(sec)
+        else:
+            raise ValueError("User Has No Such Section")
+
+    def flipActivation(self, sec):
+        if sec in self.sections.all():
+            self.sections.remove(sec)
+            self.inactive_sections.add(sec)
+            return
+        elif sec in self.inactive_sections.all():
+            self.sections.add(sec)
+            self.inactive_sections.remove(sec)
+            return
+        else:
+            raise ValueError("User Has No Such Section")
+        
+    def getActivationStatus(self, sec):
+        if sec in self.sections.all():
+            return True
+        elif sec in self.inactive_sections.all():
+            return False
+        else:
+            raise ValueError("User Has No Such Section")
+    
