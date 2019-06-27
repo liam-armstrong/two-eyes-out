@@ -34,7 +34,10 @@ class SectionsViewSet(viewsets.ModelViewSet):
             return Response({'detail': 'Not a Valid Course'}, status=status.HTTP_400_BAD_REQUEST)
 
         request.user.addSection(section)
-        return Response(serial.validated_data, status=status.HTTP_201_CREATED)
+
+        activeSerial = serializer.sectionSerializer(request.user.sections.all(), many=True, context={'is_active': True})
+        inactiveSerial = serializer.sectionSerializer(request.user.inactive_sections.all(), many=True, context={'is_active': False})
+        return Response(activeSerial.data + inactiveSerial.data, status=status.HTTP_201_CREATED)
 
     def remove(self, request):
         permission_classes = (permissions.IsAuthenticated,)
@@ -48,14 +51,14 @@ class SectionsViewSet(viewsets.ModelViewSet):
         except ValueError:
             return Response({'detail': 'Course Does Not Exist'}, status=status.HTTP_400_BAD_REQUEST)
 
-        print(str(section))
-
         try:
             request.user.removeSection(section)
         except ValueError:
             return Response({'detail': str(request.user) + " is not related to " + str(section)}, status=status.HTTP_400_BAD_REQUEST)
-
-        return Response(serial.validated_data, status=status.HTTP_200_OK)
+        
+        activeSerial = serializer.sectionSerializer(request.user.sections.all(), many=True, context={'is_active': True})
+        inactiveSerial = serializer.sectionSerializer(request.user.inactive_sections.all(), many=True, context={'is_active': False})
+        return Response(activeSerial.data + inactiveSerial.data, status=status.HTTP_201_CREATED)
 
     def flipActivation(self, request):
         permission_classes = (permissions.IsAuthenticated,)
@@ -74,8 +77,9 @@ class SectionsViewSet(viewsets.ModelViewSet):
         except ValueError:
             return Response({'detail': str(request.user) + " is not related to " + str(section)}, status=status.HTTP_400_BAD_REQUEST)
 
-        activeSerial = serializer.sectionSerializer(section, context={'is_active': request.user.getActivationStatus(section)})
-        return Response(activeSerial.data, status=status.HTTP_200_OK)
+        activeSerial = serializer.sectionSerializer(request.user.sections.all(), many=True, context={'is_active': True})
+        inactiveSerial = serializer.sectionSerializer(request.user.inactive_sections.all(), many=True, context={'is_active': False})
+        return Response(activeSerial.data + inactiveSerial.data, status=status.HTTP_201_CREATED)
 
         
         

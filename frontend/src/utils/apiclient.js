@@ -6,7 +6,7 @@ export const apiClient = function() {
     const token = store.getState().token;
     const params = {
         baseURL: URL,
-        headers: {'Authorization': 'Token ' + token}
+        headers: {'Authorization': 'JWT ' + token}
     }
     return axios.create(params);
 }
