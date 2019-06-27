@@ -4,16 +4,17 @@ import { connect } from 'react-redux'
 import Landing from './components/landing'
 import Core from './components/core'
 import Nav from './components/nav'
+import { loggedIn } from './utils/auth';
 
 class App extends Component {
   render() {
     return (
       <div className = "container-fluid">
         <Nav />
-        { this.props.token == null &&
+        { !loggedIn() &&
           <Landing />
         }
-        { this.props.token != null &&
+        { loggedIn() &&
           <Core />
         }
       </div>

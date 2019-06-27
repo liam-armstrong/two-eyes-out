@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import './login.css';
+import { addSection } from '../utils/courses';
 
 export default class Courseform extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ export default class Courseform extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    // TODO: UTIL FUNCTION CALL
+    addSection(this.state.dept, this.state.code, this.state.sect)
   }
 
   render() {

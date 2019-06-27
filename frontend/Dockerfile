@@ -1,6 +1,7 @@
-FROM node:8.12 as build-deps
+FROM node:11 as build-deps
 RUN npm install -g yarn
-WORKDIR /usr/src/app
+RUN mkdir app
+WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . ./

@@ -12,14 +12,22 @@ class sectionManager(models.Manager):
         link = 'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=' + a + '&course=' + b + '&section=' + c
         raw_html = urlopen(link, timeout = 5)
         html = BeautifulSoup(raw_html, "lxml")
-        return re.search("Outline/Syllabus", html.get_text()) != None
-
+        return re.search(r"General Seats Remaining:\d+", html.get_text()) != None
+    
     def create(self, dept, code, sect):
         if not sectionManager().is_valid_section(dept, code, sect):
             raise ValueError("Not a valid course")
         section = self.model(dept = dept, code = code, sect = sect)
         section.save()
+        section.update_seats()
         return section
+
+    def get_or_create(self, dept, code, sect):
+        try:
+            sect = self.get(dept=dept, code=code, sect=sect)
+        except section.DoesNotExist:
+            sect = self.create(dept=dept, code=code, sect=sect)
+        return sect
 
 class section(models.Model):
     # Model to represent a UBC course section
@@ -46,9 +54,7 @@ class section(models.Model):
         html = BeautifulSoup(raw_html, "lxml") # BeautifulSoup to refine html TODO Check if this is required for RE search to work 
         gen_table_line = re.search(r"General Seats Remaining:\d+",html.get_text()).group(0) # Pulls table line displaying open gen seats
         open_seats = int(re.search(r'\d+', gen_table_line).group(0)) > 0 #pulls int from line and checks if it's not 0
-        if open_seats:
-            alert_all_users(self)
-            self.save(update_fields=["open_seats"], force_update=True) #updates boolean value for section
+        self.save(update_fields=["open_seats"], force_update=True) #updates boolean value for section
         return open_seats
 
 class customUserManager(BaseUserManager):
@@ -77,7 +83,8 @@ class customUser(AbstractBaseUser, PermissionsMixin):
     #Custom user for Django Auth with email as username and fields removed
     email = models.EmailField(unique=True, null=True)
     activated = models.BooleanField(default = False)
-    sections = models.ManyToManyField(section)
+    sections = models.ManyToManyField(section, related_name="sections")
+    inactive_sections = models.ManyToManyField(section, related_name="inactive_sections")
     is_staff = models.BooleanField(
         #Django auth default field
         ('staff status'),
@@ -109,5 +116,37 @@ class customUser(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.email
 
-    def alertUser(self, section):
-        print("user: " + self.email + " has open section: " + str(section)) # placeholder method body, replace with email fn
+    def alertUser(self, sec):
+        print("user: " + self.email + " has open section: " + str(sec)) # placeholder method body, replace with email fn
+    
+    def addSection(self, sec):
+        self.sections.add(sec)
+
+    def removeSection(self, sec):
+        if sec in self.sections.all():
+            self.sections.remove(sec)
+        elif sec in self.inactive_sections.all():
+            self.inactive_sections.remove(sec)
+        else:
+            raise ValueError("User Has No Such Section")
+
+    def flipActivation(self, sec):
+        if sec in self.sections.all():
+            self.sections.remove(sec)
+            self.inactive_sections.add(sec)
+            return
+        elif sec in self.inactive_sections.all():
+            self.sections.add(sec)
+            self.inactive_sections.remove(sec)
+            return
+        else:
+            raise ValueError("User Has No Such Section")
+        
+    def getActivationStatus(self, sec):
+        if sec in self.sections.all():
+            return True
+        elif sec in self.inactive_sections.all():
+            return False
+        else:
+            raise ValueError("User Has No Such Section")
+    

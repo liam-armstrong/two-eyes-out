@@ -19,7 +19,7 @@ services:
   api:
     build: ./api
     volumes:
-      - .:/api
+      - ./api:/code
     ports:
       - "8000:8000"
     links:
@@ -33,13 +33,14 @@ services:
       - DJANGO_SU_PASSWORD=${DJANGO_SU_PASSWORD}
     container_name: 2eo_api
     
-  frontend:
-    build: ./frontend
-    volumes:
-      - .:/frontend
-    ports:
-      - "80:80"
-    container_name: 2eo_frontend
+  # frontend:
+  #   build: ./frontend
+  #   command: yarn start
+  #   volumes:
+  #     - ./frontend:/app
+  #   ports:
+  #     - "80:80"
+  #   container_name: 2eo_frontend
 
 volumes:
   database:

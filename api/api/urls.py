@@ -19,11 +19,18 @@ from rest_framework_jwt.views import obtain_jwt_token
 from django.urls import re_path, include
 from core import views
 
-router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'section', views.SectionViewSet)
+section_list = views.SectionsViewSet.as_view({
+    'get': 'list',
+    'post': 'create',
+    'delete': 'remove',
+    'patch': 'flipActivation'
+})
+
+# router = routers.DefaultRouter()
+# router.register(r'/get-sections/', views.SectionsViewSet, base_name="section") 
 
 urlpatterns = [
-    re_path(r'^', include(router.urls)),
-    re_path(r'^api-token-auth/', obtain_jwt_token),
+    # re_path(r'^', include(router.urls)),
+    re_path(r'api-token-auth', obtain_jwt_token),
+    re_path(r'sections', section_list)
 ]
