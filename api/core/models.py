@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from . import tasks
-import re, time
+import re, datetime
 
 class sectionManager(models.Manager):
     def is_valid_section(self, a, b, c):
@@ -82,9 +82,8 @@ class customUserManager(BaseUserManager):
 class customUser(AbstractBaseUser, PermissionsMixin):
     #Custom user for Django Auth with email as username and fields removed
     email = models.EmailField(unique=True, null=True)
-    activated = models.BooleanField(default = False)
-    sections = models.ManyToManyField(section, related_name="sections")
-    inactive_sections = models.ManyToManyField(section, related_name="inactive_sections")
+    activated = models.BooleanField(default = True)
+    sections = models.ManyToManyField("section", through="subscription")
     is_staff = models.BooleanField(
         #Django auth default field
         ('staff status'),
@@ -120,33 +119,42 @@ class customUser(AbstractBaseUser, PermissionsMixin):
         print("user: " + self.email + " has open section: " + str(sec)) # placeholder method body, replace with email fn
     
     def addSection(self, sec):
-        self.sections.add(sec)
+        if sec in self.sections.all():
+            raise ValueError("User Has No Such Section")
+        else: 
+            subscription.objects.create(user=self, section=sec)
 
     def removeSection(self, sec):
         if sec in self.sections.all():
-            self.sections.remove(sec)
-        elif sec in self.inactive_sections.all():
-            self.inactive_sections.remove(sec)
+            subscription.objects.get(user=self, section=sec).delete()
         else:
             raise ValueError("User Has No Such Section")
 
     def flipActivation(self, sec):
         if sec in self.sections.all():
-            self.sections.remove(sec)
-            self.inactive_sections.add(sec)
-            return
-        elif sec in self.inactive_sections.all():
-            self.sections.add(sec)
-            self.inactive_sections.remove(sec)
-            return
+            subscription.objects.get(user=self, section=sec).flipActivation()
         else:
             raise ValueError("User Has No Such Section")
         
     def getActivationStatus(self, sec):
         if sec in self.sections.all():
-            return True
-        elif sec in self.inactive_sections.all():
-            return False
+            return subscription.objects.get(user=self, section=sec).active
         else:
             raise ValueError("User Has No Such Section")
     
+class subscription(models.Model):
+    user = models.ForeignKey("customUser", on_delete=models.CASCADE)
+    section = models.ForeignKey("section", on_delete=models.CASCADE)
+    date_subscribed = models.DateField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+    premium = models.BooleanField(default=False)
+
+    def flipActivation(self):
+        self.active = not self.active
+        self.save(update_fields=["active"], force_update=True)
+
+    def flipPremium(self, sec):
+        if sec in self.sections.all():
+            subscription.objects.get(user=self, section=sec)
+        else:
+            raise ValueError("User Has No Such Section")

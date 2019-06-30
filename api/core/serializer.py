@@ -2,37 +2,36 @@ from rest_framework import serializers
 from . import models
 
 class sectionSerializer(serializers.ModelSerializer):
-    is_active = serializers.SerializerMethodField()
-
     class Meta:
         model = models.section
-        fields = ('dept', 'code', 'sect', 'is_active')
+        fields = ('dept', 'code', 'sect')
     
-    def create(self, attrs, instance=None):
+    def create(self, req, instance=None):
         assert instance is None, 'Cannot update section from a serializer'
         section_object = models.section.objects.get_or_create(
-            dept = attrs.get('dept'),
-            code = attrs.get('code'),
-            sect = attrs.get('sect')
+            dept = req.get('dept'),
+            code = req.get('code'),
+            sect = req.get('sect')
         )
-
         return section_object
     
-    def get(self, attrs):
+    def get(self, req):
         section_object = models.section.objects.get(
-            dept = attrs.get('dept'),
-            code = attrs.get('code'),
-            sect = attrs.get('sect')
+            dept = req.get('dept'),
+            code = req.get('code'),
+            sect = req.get('sect')
         )
-
         return section_object
 
     def get_unique_together_validators(self):
         return []
 
-    def get_is_active(self, obj):
-        is_active = self.context.get('is_active')
-        return is_active
+class subscriptionSerializer(serializers.ModelSerializer):
+    section = sectionSerializer()
+
+    class Meta:
+        model = models.subscription
+        fields = ('section', 'date_subscribed', 'active', 'premium')
 
 class userSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
