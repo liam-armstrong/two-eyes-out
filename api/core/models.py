@@ -145,7 +145,6 @@ class customUser(AbstractBaseUser, PermissionsMixin):
 class subscription(models.Model):
     user = models.ForeignKey("customUser", on_delete=models.CASCADE)
     section = models.ForeignKey("section", on_delete=models.CASCADE)
-    date_subscribed = models.DateField(auto_now_add=True)
     active = models.BooleanField(default=True)
     premium = models.BooleanField(default=False)
 

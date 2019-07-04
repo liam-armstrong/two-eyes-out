@@ -31,7 +31,7 @@ class subscriptionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.subscription
-        fields = ('section', 'date_subscribed', 'active', 'premium')
+        fields = ('id', 'section', 'active', 'premium')
 
 class userSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
