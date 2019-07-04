@@ -1,5 +1,4 @@
 import axios from 'axios';
-import _ from 'lodash';
 import store from '../store';
 import { getSections } from '../utils/courses';
 import { setToken, setEmail, setError } from '../actions';

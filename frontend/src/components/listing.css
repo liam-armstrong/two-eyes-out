@@ -1,0 +1,85 @@
+.listing{
+    border: solid #000;
+    border-width: 1px;
+
+    padding: 10px;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+}
+
+.listing h2{
+    padding-left: 20px;
+    margin: 0;
+    justify-self: flex-start;
+}
+
+.inactive {
+    border: solid lightgray !important;
+    border-width: 1px !important;
+    color: lightgray !important;
+}
+
+.listing button {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin-right: 15px;
+    height: 100%;
+    padding: 0;
+}
+
+.listing a{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    margin-right: 15px;
+    height: 100%;
+    padding: 0;
+}
+
+.inactive button{
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: .25;
+}
+
+.inactive a{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: .25;
+}
+
+.inactive #power {
+    pointer-events: all !important;
+    cursor: pointer !important;
+    opacity: 1 !important;
+}
+
+clr-icon.is-highlight {
+    fill: #00f;
+    margin-bottom: 2px;
+}

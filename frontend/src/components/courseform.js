@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
 import './login.css';
 import { addSection } from '../utils/courses';
 
@@ -46,20 +45,10 @@ export default class Courseform extends Component {
                 placeholder="ex 102"
                 value={this.state.sect}
                 onChange={this.handleChange}></input> 
-          <button type="submit" style = {{ color : "blue"}}>Submit</button>
+          <button type="submit" style = {{ color : "blue"}}>Add</button>
         </form>
       </div>
     );
   }
 }
-
-// const mapStateToProps = state => ({
-//   logerror: state.logerror
-// });
-
-// const mapActionstoProps = {
-//   handleSubmit: setToken
-// };
-
-// export default connect(mapStateToProps, mapActionstoProps)(Courseform);
 

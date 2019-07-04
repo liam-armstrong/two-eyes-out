@@ -43,5 +43,5 @@ export function removeSection(dept, code, sect){
 }
 
 export function flipActiveSection(dept, code, sect){
-    sectionsClient('update', dept, code, sect)
+    sectionsClient('patch', dept, code, sect)
 }

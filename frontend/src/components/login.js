@@ -4,7 +4,6 @@ import '../App.css';
 import { setToken } from '../actions/index'
 import { loginFn } from '../utils/auth';
 import './login.css';
-import store from '../store';
 
 class Login extends Component {
   constructor(props) {
@@ -27,7 +26,6 @@ class Login extends Component {
     event.preventDefault();
     loginFn(this.state.email, this.state.password);
   }
-
 
   render() {
     return (

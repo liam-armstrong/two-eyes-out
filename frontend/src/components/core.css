@@ -1,0 +1,16 @@
+ul {
+    /* -moz-column-count: 2;
+    -moz-column-gap: 20px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 20px;
+    column-count: 2;
+    column-gap: 20px; */
+    list-style-type: none;
+    height: 100%;
+}
+
+li {
+    width: 40vw;
+    height: 9vh;
+    margin: 10px;
+}

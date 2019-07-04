@@ -9,7 +9,7 @@ export default class Nav extends Component {
             <div className = "col-md-2">
               <button><img src="./2eo.png" alt="2eo"></img></button>
             </div>
-            { !loggedIn() &&
+            { loggedIn() &&
               <div className = "col-md-2 offset-md-8">
                 <button className = "logout" onClick = { logout }>
                   Logout

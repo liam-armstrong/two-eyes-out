@@ -23,9 +23,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  sections: state.sections,
-  token: state.token,
-  email: state.email
+  token: state.token
 });
 
 export default connect(mapStateToProps)(App);
