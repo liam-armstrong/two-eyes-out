@@ -892,11 +892,6 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@clr/icons@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@clr/icons/-/icons-2.0.1.tgz#14fdc219914864fc79fe44b0fb5d04f855b6ba00"
-  integrity sha512-ynfvOBMxDO4ycPfq/SBibgmG/TKol/w/J0kSk04ib4bVO7b3hHI84Sk6utvhy7frsohHFBhyQd/WUrtdAMBuhw==
-
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.3.tgz#099139eaec7ebf07a27c1786a3ff64f39464d2ef"
@@ -1483,11 +1478,6 @@
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
-
-"@webcomponents/custom-elements@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@webcomponents/custom-elements/-/custom-elements-1.0.0.tgz#b1726e12074b556aa31b93f36ff6a03a435259c4"
-  integrity sha1-sXJuEgdLVWqjG5Pzb/agOkNSWcQ=
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
