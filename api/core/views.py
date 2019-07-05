@@ -17,7 +17,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
     def list(self, request):
         permission_classes = (permissions.IsAuthenticated,)
         authentication_classes = (JSONWebTokenAuthentication,)
-        serial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user), many=True)
+        serial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user).order_by('id'), many=True)
         return Response(serial.data, status=status.HTTP_200_OK)
 
     def create(self, request):
@@ -34,7 +34,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
 
         request.user.addSection(section)
 
-        reqSerial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user), many=True)
+        reqSerial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user).order_by('id'), many=True)
         return Response(reqSerial.data, status=status.HTTP_201_CREATED)
 
     def remove(self, request):
@@ -54,7 +54,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
         except ValueError:
             return Response({'detail': str(request.user) + " is not related to " + str(section)}, status=status.HTTP_400_BAD_REQUEST)
         
-        reqSerial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user), many=True)
+        reqSerial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user).order_by('id'), many=True)
         return Response(reqSerial.data, status=status.HTTP_200_OK)
 
     def flipActivation(self, request):
@@ -74,7 +74,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
         except ValueError:
             return Response({'detail': str(request.user) + " is not related to " + str(section)}, status=status.HTTP_400_BAD_REQUEST)
 
-        reqSerial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user), many=True)
+        reqSerial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user).order_by('id'), many=True)
         return Response(reqSerial.data, status=status.HTTP_200_OK)
 
         
