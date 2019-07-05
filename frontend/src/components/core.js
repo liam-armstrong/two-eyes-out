@@ -13,7 +13,7 @@ class Core extends Component {
         </div>
         <div className = "row justify-content-center align-items-top listings" style = {{height: "60vh", paddingTop: "5vh"}}>
           <ul className = "justify-content-center">
-            {this.props.sections.map((slist) => <li key={slist.id}><Listing id={slist.id} section={slist.section} active={slist.active} premium={slist.premium}/></li>) }
+            {this.props.sections.map((slist) => <li key={slist.id}><Listing id={slist.id}/></li>) }
           </ul>
         </div>
       </div>

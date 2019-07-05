@@ -1,7 +1,7 @@
 import axios from 'axios';
 import store from '../store';
 import { getSections } from '../utils/courses';
-import { setToken, setEmail, setError } from '../actions';
+import { setToken, setEmail, setError, setSections } from '../actions';
 import { URL, LOGIN } from '../config/api';
 
 export function InvalidCredentialsException(message) {
@@ -34,6 +34,8 @@ export function loggedIn () {
 }
 
 export function logout () {
+    store.dispatch(setError(false));    
     store.dispatch(setEmail(null));
+    store.dispatch(setSections([]))
     return store.dispatch(setToken(null));
 }

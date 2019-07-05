@@ -79,7 +79,7 @@
     opacity: 1 !important;
 }
 
-clr-icon.is-highlight {
-    fill: #00f;
+.md-blue{
+    color: #0000ff;
     margin-bottom: 2px;
 }
