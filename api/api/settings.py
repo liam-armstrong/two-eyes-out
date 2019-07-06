@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from .keygen import *
+from celery.schedules import crontab
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -29,9 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-keygenFn()
-with open(SECRET_FILE, 'r') as secretfile:
-  SECRET_KEY = secretfile.read()
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 INSTALLED_APPS = [
     'rest_framework',
@@ -43,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'celery',
 ]
 
 MIDDLEWARE = [
@@ -109,6 +108,19 @@ CACHES = {
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
+    }
+}
+
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_BEAT_SCHEDULE = {
+    'hello': {
+        'task': 'app.tasks.hello',
+        'schedule': crontab()  # execute every minute
     }
 }
 
