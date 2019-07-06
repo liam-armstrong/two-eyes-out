@@ -117,12 +117,12 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
-CELERY_BEAT_SCHEDULE = {
-    'hello': {
-        'task': 'app.tasks.hello',
-        'schedule': crontab()  # execute every minute
-    }
-}
+# CELERY_BEAT_SCHEDULE = {
+#     'hello': {
+#         'task': 'app.tasks.hello',
+#         'schedule': crontab()  # execute every minute
+#     }
+# }
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"

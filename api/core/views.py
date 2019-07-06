@@ -4,6 +4,7 @@ from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.exceptions import ParseError
+from .tasks import hello
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = models.customUser.objects.all()

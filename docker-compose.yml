@@ -32,29 +32,34 @@ services:
       - DJANGO_SU_EMAIL=${DJANGO_SU_EMAIL}
       - DJANGO_SU_PASSWORD=${DJANGO_SU_PASSWORD}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - START_CODE=0
     container_name: 2eo_api
 
-  # celery:
-  #   build:
-  #     context: ./api
-  #     dockerfile: Dockerfile.cel
-  #   command: celery -A core worker -l info
-  #   volumes:
-  #     - .:/code
-  #   depends_on:
-  #     - db
-  #     - redis
+  celery:
+    build: ./api
+    volumes:
+      - ./api:/code
+    links:
+      - redis
+    depends_on:
+      - redis
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - START_CODE=1
+    container_name: 2eo_celery
 
-  # celery-beat:
-  #   build:
-  #     context: ./api
-  #     dockerfile: Dockerfile.cel
-  #   command: celery -A core beat -l info
-  #   volumes:
-  #     - .:/code
-  #   depends_on:
-  #     - db
-  #     - redis
+  celery-beat:
+    build: ./api
+    volumes:
+      - ./api:/code
+    links:
+      - redis
+    depends_on:
+      - redis
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - START_CODE=2
+    container_name: 2eo_celery_beat
     
   frontend:
     build: ./frontend
