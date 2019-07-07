@@ -4,27 +4,30 @@ from celery import shared_task
 from celery.task.schedules import crontab
 from . import models
 import logging
+import redis
 
 logger = logging.getLogger("celery")
-
-@periodic_task(run_every=(crontab(minute='*/3')), name="check_seats", ignore_result=True)
-def check_seats():
-    for section in models.section.objects.all():
-        if section.update_seats():
-                alert_all_users(section)
+client = redis.Redis(host="redis", port=6379, db=1)
 
 @shared_task
-def alert_all_users(sect):
-    for models.customUser in sect.customuser_set.all():
+def start_check_seats():
+    logger.info("Running start_check_seats")
+    length = client.llen("monitoring_queue")
+    if length <= 0:
+        for section in models.section.objects.all():
+            update_seats.delay(id=section.id)
+                    
+@shared_task
+def update_seats(id):
+    if models.section.objects.get(id=id).update_seats():
+        alert_all_users(id)
+
+@shared_task
+def alert_all_users(id):
+    for models.customUser in models.section.objects.get(id=id).customuser_set.all():
         print(str(customUser)) #TODO actually email/alert user here
+        #TODO DON'T FORGET TO SET SEAT AS INACTIVE FOR USER
 
 @shared_task
 def send_registration_email(user):
     print("") #TODO actually email/alert user here
-    
-@shared_task
-def hello():
-        print("Hello World")
-        logger.info("-"*25)
-        logger.info("Printing Hello from Celery")
-        logger.info("-"*25)

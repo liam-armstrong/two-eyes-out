@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 from celery.schedules import crontab
+from kombu import Exchange, Queue
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -117,12 +118,25 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
-# CELERY_BEAT_SCHEDULE = {
-#     'hello': {
-#         'task': 'app.tasks.hello',
-#         'schedule': crontab()  # execute every minute
-#     }
-# }
+CELERY_QUEUES = (
+    Queue('default_queue', Exchange('default_queue'), routing_key='default_queue'),
+    Queue('monitoring_queue', Exchange('monitoring_queue'), routing_key='monitoring_queue'),
+    Queue('trigger_queue', Exchange('trigger_queue'), routing_key='trigger_queue'),
+)
+
+CELERY_TASK_ROUTES = {
+ 'core.tasks.send_registration_email': {'queue': 'default_queue', 'routing_key': 'default_queue'},
+ 'core.tasks.alert_all_users': {'queue': 'default_queue', 'routing_key': 'default_queue'},
+ 'core.tasks.update_seats': {'queue': 'monitoring_queue', 'routing_key': 'monitoring_queue'},
+}
+
+CELERY_BEAT_SCHEDULE = {
+    'start_check_seats': {
+        'task': 'core.tasks.start_check_seats',
+        'schedule': crontab(),
+        'options': {'queue': 'trigger_queue'}
+    }
+}
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"

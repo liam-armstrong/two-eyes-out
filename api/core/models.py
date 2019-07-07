@@ -55,7 +55,7 @@ class section(models.Model):
         gen_table_line = re.search(r"General Seats Remaining:\d+",html.get_text()).group(0) # Pulls table line displaying open gen seats
         open_seats = int(re.search(r'\d+', gen_table_line).group(0)) > 0 #pulls int from line and checks if it's not 0
         self.save(update_fields=["open_seats"], force_update=True) #updates boolean value for section
-        return open_seats
+        return open_seats 
 
 class customUserManager(BaseUserManager):
     # Custom user manager to handle our custom user

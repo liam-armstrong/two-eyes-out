@@ -35,7 +35,7 @@ services:
       - START_CODE=0
     container_name: 2eo_api
 
-  celery:
+  celery-wo1:
     build: ./api
     volumes:
       - ./api:/code
@@ -44,9 +44,41 @@ services:
     depends_on:
       - redis
     environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - START_CODE=1
-    container_name: 2eo_celery
+    container_name: 2eo_c01d
+
+  celery-w02:
+    build: ./api
+    volumes:
+      - ./api:/code
+    links:
+      - redis
+    depends_on:
+      - redis
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - START_CODE=2
+    container_name: 2eo_c02m
+
+  celery-w03:
+    build: ./api
+    volumes:
+      - ./api:/code
+    links:
+      - redis
+    depends_on:
+      - redis
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - START_CODE=3
+    container_name: 2eo_c03t
 
   celery-beat:
     build: ./api
@@ -57,9 +89,11 @@ services:
     depends_on:
       - redis
     environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
-      - START_CODE=2
-    container_name: 2eo_celery_beat
+      - START_CODE=4
+    container_name: 2eo_c04b
     
   frontend:
     build: ./frontend
