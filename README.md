@@ -24,11 +24,14 @@ ___
     [x] JSON web token configuration and end point setup
     [x] Celery and Redis for task management setup
     [x] Celery tasks for seat monitering and communicating with user
+    [x] Celery Queue and worker configuration
     [x] Docker setup and image creation
-    [x] Deployment on DigitalOcean droplet and Docker autobuild
+    [x] REST endpoint for sections: get, add, remove and update
+    [] AWS EC2 setup and deployment
+    [] AWS SES setup and API calls from Celery tasks
+    [] User registration
+    [] Forgot password functionality
     [] Postman scripting automated API endpoint testing 
-    [x] Endpoint for registered section population
-    [] Email API implementation
 ```
 **Frontend:**
 ```
@@ -36,9 +39,10 @@ ___
     [x] React app configuration
     [x] Redux reducers/actions for token and section list
     [x] Auth utils with Axios and Lodash
-    [x] Components: Login, Nav, Landing page, Section form, Section page
-    [] Components: Section list, User settings
+    [x] Section utils for getting, adding, removing and updating
+    [x] Components: Login, Nav, Landing page, Section form, Section page, Section list
+    [] Components: Loading , Alert, Registration form, Forgot Password form
 ```
 
-Once basic functionality is completed for both back and front end, both will be deployed to a DigitalOcean droplet with Docker and published to liam-armstrong.com/2eo
+Once basic functionality is completed for both back and front end, both will be deployed to an AWS EC2 instance with Docker and published to 2eo.xyz
 
