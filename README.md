@@ -46,3 +46,4 @@ ___
 
 Once basic functionality is completed for both back and front end, both will be deployed to an AWS EC2 instance with Docker and published to 2eo.xyz
 
+You can view the KanBan boards and feature pipeline on Notion [here](https://www.notion.so/Two-Eyes-Out-cf165d78af3f4a7ca896b5ca39d7032f)
