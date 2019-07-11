@@ -2,7 +2,7 @@
 
 echo Starting a Python container with START_CODE: ${START_CODE}
 
-case ${START_CODE} in
+case "$START_CODE" in
 	0)
         echo Starting Gunicorn.
         exec gunicorn api.wsgi:application \
