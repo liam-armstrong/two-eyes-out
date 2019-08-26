@@ -10,6 +10,7 @@ export function InvalidCredentialsException(message) {
 }
 
 export function loginFn(email, password) {
+    console.log("POSTING " + email + " + " + password + " to " + URL + LOGIN);
     return axios
         .post(URL + LOGIN, {
             email,
@@ -22,7 +23,9 @@ export function loginFn(email, password) {
             getSections()
         })
         .catch(function (error) {
-            console.log(error);
+            console.log("Error in login process");
+            console.log("Response status: " + response.status);
+            console.log("Response data: " + response.data);
             store.dispatch(setError(true));
             throw new InvalidCredentialsException(error);
         })

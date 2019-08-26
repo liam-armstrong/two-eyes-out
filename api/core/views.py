@@ -4,6 +4,13 @@ from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.exceptions import ParseError
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+fh = logging.FileHandler('views.log')
+fh.setLevel(logging.DEBUG)
+logger.addHandler(fh)
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = models.customUser.objects.all()
@@ -18,6 +25,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
         permission_classes = (permissions.IsAuthenticated,)
         authentication_classes = (JSONWebTokenAuthentication,)
         serial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user).order_by('id'), many=True)
+        logger.debug("Section List view returned to: " + request.user)
         return Response(serial.data, status=status.HTTP_200_OK)
 
     def create(self, request):
@@ -35,6 +43,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
         request.user.addSection(section)
 
         reqSerial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user).order_by('id'), many=True)
+        logger.debug("Section added to: " + request.user)
         return Response(reqSerial.data, status=status.HTTP_201_CREATED)
 
     def remove(self, request):
@@ -55,6 +64,8 @@ class SectionsViewSet(viewsets.ModelViewSet):
             return Response({'detail': str(request.user) + " is not related to " + str(section)}, status=status.HTTP_400_BAD_REQUEST)
         
         reqSerial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user).order_by('id'), many=True)
+
+        logger.debug("Section removed by: " + request.user)
         return Response(reqSerial.data, status=status.HTTP_200_OK)
 
     def flipActivation(self, request):
@@ -75,6 +86,8 @@ class SectionsViewSet(viewsets.ModelViewSet):
             return Response({'detail': str(request.user) + " is not related to " + str(section)}, status=status.HTTP_400_BAD_REQUEST)
 
         reqSerial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user).order_by('id'), many=True)
+
+        logger.debug("Section activation flipped by: " + request.user)
         return Response(reqSerial.data, status=status.HTTP_200_OK)
 
         
