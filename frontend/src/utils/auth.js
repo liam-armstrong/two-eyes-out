@@ -24,8 +24,8 @@ export function loginFn(email, password) {
         })
         .catch(function (error) {
             console.log("Error in login process");
-            console.log("Response status: " + response.status);
-            console.log("Response data: " + response.data);
+            console.log("Response status: " + error.status);
+            console.log("Response data: " + error.data);
             store.dispatch(setError(true));
             throw new InvalidCredentialsException(error);
         })
