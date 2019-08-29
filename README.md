@@ -1,6 +1,8 @@
 # two-eyes-out
 ![Homepage Image](designs/landing-actual.png?raw=true "Landing Page")
 
+### Closed Beta now open at [2eo.xyz](https://2eo.xyz). Contact me (liam at liam-armstrong.com) for access!
+
 If a class is full at UBC, students cannot register until a seat opens in their desired sections. 
 
 Since there is no officially offered solution other than checking the webpage regularly, 3rd party tools have been created to watch lecture web pages for openings and alert the students when a seat opens up.
