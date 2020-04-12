@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import Courseform from './courseform'
+import Courseform from '../courseform/courseform.js'
 import { connect } from 'react-redux'
 import './core.css'
-import Listing from './listing';
+import Listing from '../listing/listing.js';
 
 class Core extends Component {
   render() {

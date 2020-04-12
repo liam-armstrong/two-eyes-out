@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Login from './login'
+import Login from '../login/login.js'
 import './landing.css'
 
 export default class Landing extends Component {

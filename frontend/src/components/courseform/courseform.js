@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './login.css';
-import { addSection } from '../utils/courses';
+import '../login/login.css';
+import { addSection } from '../../utils/courses';
 
 export default class Courseform extends Component {
   constructor(props) {

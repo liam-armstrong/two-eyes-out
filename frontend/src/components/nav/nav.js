@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { logout, loggedIn }from '../utils/auth'
+import { logout, loggedIn }from '../../utils/auth'
 import './nav.css'
 
 export default class Nav extends Component {

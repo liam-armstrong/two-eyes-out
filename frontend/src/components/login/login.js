@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import '../App.css';
-import { setToken } from '../actions/index'
-import { loginFn } from '../utils/auth';
+import '../../App.css';
+import { setToken } from '../../actions/index'
+import { loginFn } from '../../utils/auth';
 import './login.css';
 
 class Login extends Component {

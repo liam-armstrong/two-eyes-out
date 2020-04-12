@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './listing.css'
-import { removeSection, flipActiveSection } from '../utils/courses';
+import { removeSection, flipActiveSection } from '../../utils/courses';
 import { connect } from 'react-redux'
 
 class Listing extends Component {
