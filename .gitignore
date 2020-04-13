@@ -1,3 +1,6 @@
+*.ppk
+*.pem
+
 .\vscode
 2eo.code-workspace
 *.log

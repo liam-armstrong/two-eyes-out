@@ -6,14 +6,15 @@ PROD_UP="prod"
 DEV_UP="dev"
 PROD_DOWN="prod-down"
 DEV_DOWN="dev-down"
-CHOKIDAR_USEPOLLING=true
+SERVER="ssh"
 
 print_usage() {
-  echo "USAGE: ./run.sh [ $PROD_UP | $DEV_UP | $STACK_DOWN | $DEV_DOWN ]"
+  echo "USAGE: ./run.sh [ $PROD_UP | $DEV_UP | $STACK_DOWN | $DEV_DOWN | $SERVER ]"
   echo "$PROD_UP: Run the full stack in a production environment"
   echo "$DEV_UP: Run the full stack in a developer environment"
   echo "$PROD_DOWN: Tear down prod containers"
   echo "$DEV_DOWN: Tear down dev containers"
+  echo "$SERVER: Connect to AWS EC2 instance"
 }
 
 check_docker() {
@@ -49,6 +50,8 @@ elif [[ $DESIRED_PROTOCOL == $DEV_DOWN ]]; then
   check_docker
   docker-compose -f config/full-stack-dev.yml down
   exit 0
+elif [[ $DESIRED_PROTOCOL == $SERVER ]]; then
+  ssh -i "key.pem" ec2-user@ec2-3-87-134-115.compute-1.amazonaws.com
 else
   print_usage
   exit 0
