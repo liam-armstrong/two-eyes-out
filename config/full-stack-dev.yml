@@ -1,0 +1,110 @@
+version: '3'
+
+services:
+  db:
+      image: kiasaki/alpine-postgres:9.5
+      environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      ports:
+        - '5555:5432'
+      container_name: 2eo_db
+      volumes:
+        - database:/var/lib/postgresql/data
+
+  redis:
+    image: redis
+    container_name: 2eo_redis
+
+  api:
+    build: ../api
+    volumes:
+      - ../api:/code
+    ports:
+      - "8000:8000"
+    links:
+      - db
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DJANGO_SU_EMAIL=${DJANGO_SU_EMAIL}
+      - DJANGO_SU_PASSWORD=${DJANGO_SU_PASSWORD}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - START_CODE=0
+    container_name: 2eo_api
+
+  celery-wo1:
+    build: ../api
+    volumes:
+      - ../api:/code
+    links:
+      - redis
+    depends_on:
+      - redis
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - START_CODE=1
+    container_name: 2eo_c01d
+
+  celery-w02:
+    build: ../api
+    volumes:
+      - ../api:/code
+    links:
+      - redis
+    depends_on:
+      - redis
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - START_CODE=2
+    container_name: 2eo_c02m
+
+  celery-w03:
+    build: ../api
+    volumes:
+      - ../api:/code
+    links:
+      - redis
+    depends_on:
+      - redis
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - START_CODE=3
+    container_name: 2eo_c03t
+
+  celery-beat:
+    build: ../api
+    volumes:
+      - ../api:/code
+    links:
+      - redis
+    depends_on:
+      - redis
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - START_CODE=4
+    container_name: 2eo_c04b
+    
+  frontend:
+    build: 
+      context: ../frontend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ../frontend:/app
+    ports:
+      - "80:3000"
+    container_name: 2eo_frontend
+    stdin_open: true
+
+volumes:
+  database:

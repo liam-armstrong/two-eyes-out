@@ -17,9 +17,9 @@ services:
     container_name: 2eo_redis
 
   api:
-    build: ./api
+    build: ../api
     volumes:
-      - ./api:/code
+      - ../api:/code
     ports:
       - "8000:8000"
     links:
@@ -36,9 +36,9 @@ services:
     container_name: 2eo_api
 
   celery-wo1:
-    build: ./api
+    build: ../api
     volumes:
-      - ./api:/code
+      - ../api:/code
     links:
       - redis
     depends_on:
@@ -51,9 +51,9 @@ services:
     container_name: 2eo_c01d
 
   celery-w02:
-    build: ./api
+    build: ../api
     volumes:
-      - ./api:/code
+      - ../api:/code
     links:
       - redis
     depends_on:
@@ -66,9 +66,9 @@ services:
     container_name: 2eo_c02m
 
   celery-w03:
-    build: ./api
+    build: ../api
     volumes:
-      - ./api:/code
+      - ../api:/code
     links:
       - redis
     depends_on:
@@ -81,9 +81,9 @@ services:
     container_name: 2eo_c03t
 
   celery-beat:
-    build: ./api
+    build: ../api
     volumes:
-      - ./api:/code
+      - ../api:/code
     links:
       - redis
     depends_on:
@@ -95,12 +95,16 @@ services:
       - START_CODE=4
     container_name: 2eo_c04b
     
-  frontend:
-    build: ./frontend
+  app:
+    build: 
+      context: ../frontend
+      dockerfile: Dockerfile.prod
     volumes:
-      - ./frontend:/app
+      - ../frontend:/app
     ports:
       - "80:80"
+    links:
+      - api:api
     container_name: 2eo_frontend
 
 volumes:
