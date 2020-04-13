@@ -29,7 +29,7 @@ ___
     [x] Celery Queue and worker configuration
     [x] Docker setup and image creation
     [x] REST endpoint for sections: get, add, remove and update
-    [] AWS EC2 setup and deployment
+    [x] AWS EC2 setup and deployment
     [] AWS SES setup and API calls from Celery tasks
     [] User registration
     [] Forgot password functionality
@@ -43,7 +43,7 @@ ___
     [x] Auth utils with Axios and Lodash
     [x] Section utils for getting, adding, removing and updating
     [x] Components: Login, Nav, Landing page, Section form, Section page, Section list
-    [] Components: Loading , Alert, Registration form, Forgot Password form
+    [] Components: Loading, Alert, Registration form, Forgot Password form
 ```
 
 Once basic functionality is completed for both back and front end, both will be deployed to an AWS EC2 instance with Docker and published to 2eo.xyz
