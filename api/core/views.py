@@ -25,7 +25,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
         permission_classes = (permissions.IsAuthenticated,)
         authentication_classes = (JSONWebTokenAuthentication,)
         serial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user).order_by('id'), many=True)
-        logger.debug("Section List view returned to: " + request.user)
+        logger.debug("Section List view returned to: " + str(request.user))
         return Response(serial.data, status=status.HTTP_200_OK)
 
     def create(self, request):
@@ -43,7 +43,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
         request.user.addSection(section)
 
         reqSerial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user).order_by('id'), many=True)
-        logger.debug("Section added to: " + request.user)
+        logger.debug("Section added to: " + str(request.user))
         return Response(reqSerial.data, status=status.HTTP_201_CREATED)
 
     def remove(self, request):
@@ -65,7 +65,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
         
         reqSerial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user).order_by('id'), many=True)
 
-        logger.debug("Section removed by: " + request.user)
+        logger.debug("Section removed by: " + str(request.user))
         return Response(reqSerial.data, status=status.HTTP_200_OK)
 
     def flipActivation(self, request):
@@ -87,7 +87,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
 
         reqSerial = serializer.subscriptionSerializer(models.subscription.objects.filter(user=request.user).order_by('id'), many=True)
 
-        logger.debug("Section activation flipped by: " + request.user)
+        logger.debug("Section activation flipped by: " + str(request.user))
         return Response(reqSerial.data, status=status.HTTP_200_OK)
 
         
