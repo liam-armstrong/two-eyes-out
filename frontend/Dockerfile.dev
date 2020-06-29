@@ -5,6 +5,8 @@ ADD yarn.lock /yarn.lock
 WORKDIR /usr/src/app
 ADD package.json /package.json
 COPY package.json yarn.lock ./
+ARG REACT_APP_BASEURL
+ENV REACT_APP_BASEURL $REACT_APP_BASEURL
 
 RUN yarn install
 COPY . ./
