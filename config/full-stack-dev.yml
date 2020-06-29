@@ -104,6 +104,8 @@ services:
     ports:
       - "80:3000"
     container_name: 2eo_frontend
+    environment: 
+      - baseUrl=localhost
     stdin_open: true
 
 volumes:
