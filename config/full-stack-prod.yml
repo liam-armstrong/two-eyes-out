@@ -116,7 +116,7 @@ services:
       - api:api
     container_name: 2eo_frontend
     environment:
-      - baseUrl=2eo.xyz
+      - REACT_APP_BASEURL=2eo.xyz
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
 volumes:
