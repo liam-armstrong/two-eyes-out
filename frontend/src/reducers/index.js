@@ -45,11 +45,22 @@ const logerror = (state = logerrorInitialState, action) => {
     }
 }
 
+const sectionLoadingInit = false;
+const sectionLoading = (state = sectionLoadingInit, action) => {
+    switch(action.type) {
+        case actionType.SET_SLOADING:
+            return action.data
+        default:
+            return state;
+    }
+}
+
 const appReducer = combineReducers({
     token,
     slist,
     email,
-    logerror
+    logerror,
+    sectionLoading
 })
 
 const rootReducer = (state, action) => {

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import './App.css'
 import { connect } from 'react-redux'
-import Landing from './components/landing/landing.js'
-import Core from './components/core/core.js'
-import Nav from './components/nav/nav.js'
-import { loggedIn } from './utils/auth.js';
+import Landing from './components/landing/landing'
+import Core from './components/core/core'
+import Nav from './components/nav/nav'
+import { loggedIn } from './utils/auth';
 
 class App extends Component {
   render() {

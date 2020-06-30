@@ -27,3 +27,10 @@ export const setError = (data) => {
     data
   }
 }
+
+export const setSLoading = (data) => {
+  return {
+    type: actionType.SET_SLOADING,
+    data
+  }
+}
