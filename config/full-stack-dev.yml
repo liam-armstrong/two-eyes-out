@@ -33,6 +33,7 @@ services:
       - DJANGO_SU_PASSWORD=${DJANGO_SU_PASSWORD}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - START_CODE=0
+      - DEBUG=True
     container_name: 2eo_api
 
   celery-wo1:
@@ -95,18 +96,18 @@ services:
       - START_CODE=4
     container_name: 2eo_c04b
     
-  frontend:
-    build: 
-      context: ../frontend
-      dockerfile: Dockerfile.dev
-      args:
-        - REACT_APP_BASEURL=localhost
-    volumes:
-      - ../frontend:/app
-    ports:
-      - "80:3000"
-    container_name: 2eo_frontend
-    stdin_open: true
+  # frontend:
+  #   build: 
+  #     context: ../frontend
+  #     dockerfile: Dockerfile.dev
+  #     args:
+  #       - REACT_APP_BASEURL=http://localhost:8000
+  #   volumes:
+  #     - ../frontend:/app
+  #   ports:
+  #     - "80:3000"
+  #   container_name: 2eo_frontend
+  #   stdin_open: true
 
 volumes:
   database:

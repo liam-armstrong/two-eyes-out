@@ -33,6 +33,7 @@ services:
       - DJANGO_SU_PASSWORD=${DJANGO_SU_PASSWORD}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - START_CODE=0
+      - DEBUG=False
     container_name: 2eo_api
 
   celery-wo1:
@@ -100,7 +101,7 @@ services:
       context: ../frontend
       dockerfile: Dockerfile.prod
       args:
-        - REACT_APP_BASEURL=2eo.xyz
+        - REACT_APP_BASEURL=https://2eo.xyz/api
     volumes:
       - ../frontend:/app
     ports:

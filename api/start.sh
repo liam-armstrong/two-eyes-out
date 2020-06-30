@@ -1,10 +1,10 @@
 #!/bin/bash
 #! CELERY WORKER LOG LEVELS: DEBUG, INFO, WARNING, ERROR, CRITICAL, or FATAL.
 
-echo Starting a Python container with START_CODE: ${START_CODE}
+echo Starting a Python container with START_CODE: "${START_CODE}"
 
-case ${START_CODE} in
-	0)
+case "${START_CODE}" in
+    0)
         echo Starting Gunicorn.
         exec gunicorn api.wsgi:application \
             --bind 0.0.0.0:8000 \
@@ -28,8 +28,7 @@ case ${START_CODE} in
         exec celery -A api beat -l INFO
         ;;
     *)
-		echo Incorrect START_CODE= ${START_CODE}
+		echo Incorrect START_CODE= "${START_CODE}"
 		;;
     
 esac
-
