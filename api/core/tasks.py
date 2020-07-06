@@ -24,10 +24,10 @@ def update_seats(id):
 
 @shared_task
 def alert_all_users(id):
-    for models.customUser in models.section.objects.get(id=id).customuser_set.all():
-        print(str(customUser)) #TODO actually email/alert user here
+    for user in models.section.objects.get(id=id).customuser_set.all():
+        print(str(user)) #TODO actually email/alert user here
         #TODO DON'T FORGET TO SET SEAT AS INACTIVE FOR USER
 
 @shared_task
 def send_registration_email(user):
-    print("") #TODO actually email/alert user here
+    print("Sending registration email to: " + str(user)) #TODO actually email/alert user here

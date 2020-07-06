@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
 from . import models
 
 class sectionSerializer(serializers.ModelSerializer):
@@ -33,8 +34,13 @@ class subscriptionSerializer(serializers.ModelSerializer):
         model = models.subscription
         fields = ('id', 'section', 'active', 'premium')
 
-class userSerializer(serializers.HyperlinkedModelSerializer):
+class userSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.customUser
-        fields = ('email', 'sections')
+        fields = '__all__'
+
+    def create(self, req, instance=None):
+        assert instance is None, 'Cannot update user from a serializer'
+        UserModel = get_user_model()
+        return UserModel.objects.create_user(email = req.get('email'), password = req.get('password'))
         

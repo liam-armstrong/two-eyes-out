@@ -26,7 +26,12 @@ section_list = views.SectionsViewSet.as_view({
     'patch': 'flipActivation'
 })
 
+user_functions = views.UserViewSet.as_view({
+    'post': 'create',
+})
+
 urlpatterns = [
     re_path(r'api-token-auth', obtain_jwt_token),
-    re_path(r'sections', section_list)
+    re_path(r'sections', section_list),
+    re_path(r'users', user_functions),
 ]
