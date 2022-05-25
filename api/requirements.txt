@@ -15,7 +15,7 @@ idna==2.8
 kombu==4.6.3
 lxml==4.3.4
 psycopg2==2.8.3
-pyjwt==1.7.1
+pyjwt==2.4.0
 pytz==2019.1
 redis==3.2.1
 requests==2.22.0
